@@ -4,18 +4,21 @@ const tasks = [
     title: 'Купить продукты на неделю',
     isDone: false,
     addedAt: '1 сентября',
+    priority: 2,
   },
   {
     id: 2,
     title: 'Полить цветы',
     isDone: true,
     addedAt: '2 сентября',
+    priority: 0,
   },
   {
     id: 3,
     title: 'Сходить на тренировку',
     isDone: false,
     addedAt: '3 сентября',
+    priority: 1,
   },
 ]
 
@@ -27,7 +30,10 @@ export const App = () => {
       {tasks.length === 0 && <p>Задачи отсутствуют</p>}
       <ul>
         {tasks.map((task) => (
-          <li key={task.id}>
+          <li
+            key={task.id}
+            style={{ backgroundColor: task.priority >= 2 ? 'orange' : 'transparent' }}
+          >
             <div>
               <b>Заголовок: </b>
               <span style={{ textDecoration: `${task.isDone ? 'line-through' : 'none'}` }}>{task.title}</span>
