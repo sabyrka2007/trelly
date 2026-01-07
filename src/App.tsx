@@ -49,6 +49,7 @@ export const App = () => {
           <li
             key={task.id}
             style={{ backgroundColor: priorities[task.priority] }}
+            onClick={() => alert(task.id)}
           >
             <div>
               <b>Заголовок: </b>
