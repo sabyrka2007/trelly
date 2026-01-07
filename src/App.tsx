@@ -23,6 +23,8 @@ export const App = () => {
   return (
     <>
       <h1>Список дел</h1>
+      {tasks === null && <p>Загрузка...</p>}
+      {tasks.length === 0 && <p>Задачи отсутствуют</p>}
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
