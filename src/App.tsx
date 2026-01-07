@@ -1,47 +1,44 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const tasks = [
-  {
-    id: 1,
-    title: 'Купить продукты на неделю',
-    isDone: false,
-    addedAt: '1 сентября',
-    priority: 2,
-  },
-  {
-    id: 2,
-    title: 'Полить цветы',
-    isDone: true,
-    addedAt: '2 сентября',
-    priority: 0,
-  },
-  {
-    id: 3,
-    title: 'Сходить на тренировку',
-    isDone: false,
-    addedAt: '3 сентября',
-    priority: 1,
-  },
-  {
-    id: 4,
-    title: 'Срочно отправить рабочий отчет',
-    isDone: false,
-    addedAt: '4 сентября',
-    priority: 4,
-  },
-  {
-    id: 5,
-    title: 'Заплатить за коммунальные услуги',
-    isDone: false,
-    addedAt: '3 сентября',
-    priority: 3,
-  },
-]
+type TaskStatus = 0 | 1 | 2 | 3
 
-const priorities = ['#fff', '#ffd7b5', '#ffb38a', '#ff9248', '#ff6700']
+const TaskStatus = {
+  New: 0,
+  InProgress: 1,
+  Done: 2,
+  Archived: 3,
+} as const
+
+type TaskPriority = 0 | 1 | 2 | 3 | 4
+
+interface GlobalTaskListItemDto {
+  title: string
+  status: TaskStatus
+  priority: TaskPriority
+  addedAt: string
+}
+
+interface GlobalTaskListItemJsonApiData {
+  id: number
+  attributes: GlobalTaskListItemDto
+}
 
 export const App = () => {
+  const API_KEY = import.meta.env.VITE_API_KEY
+
+  const [tasks, setTasks] = useState<GlobalTaskListItemJsonApiData[] | null>(null)
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null)
+
+  const priorities = ['#fff', '#ffd7b5', '#ffb38a', '#ff9248', '#ff6700']
+
+  useEffect(() => {
+    fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
+      headers: {
+        'api-key': API_KEY,
+      },
+    }).then(res => res.json())
+      .then(json => setTasks(json.data))
+  }, [])
 
   return (
     <>
@@ -49,35 +46,35 @@ export const App = () => {
 
       {tasks === null && <p>Загрузка...</p>}
 
-      {tasks.length === 0 && <p>Задачи отсутствуют</p>}
+      {tasks?.length === 0 && <p>Задачи отсутствуют</p>}
 
       <button onClick={() => setSelectedTaskId(null)}>Сбросить выделение</button>
 
       <ul>
-        {tasks.map((task) => (
+        {tasks?.map((task) => (
           <li
             key={task.id}
             style={{
-              backgroundColor: priorities[task.priority],
+              backgroundColor: priorities[task.attributes.priority],
               border: `1px solid ${task.id === selectedTaskId ? 'blue' : 'black'}`,
             }}
             onClick={() => setSelectedTaskId(task.id)}
           >
             <div>
               <b>Заголовок: </b>
-              <span style={{ textDecoration: `${task.isDone ? 'line-through' : 'none'}` }}>{task.title}</span>
+              <span style={{ textDecoration: task.attributes.status === TaskStatus.Done ? 'line-through' : 'none' }}>{task.attributes.title}</span>
             </div>
             <div>
               <b>Статус: </b>
               <input
                 type="checkbox"
-                checked={task.isDone}
+                checked={task.attributes.status === 2}
                 readOnly
               />
             </div>
             <div>
               <b>Дата создания задачи: </b>
-              <span>{task.addedAt}</span>
+              <span>{task.attributes.addedAt}</span>
             </div>
           </li>
         ))}
