@@ -20,7 +20,23 @@ const tasks = [
     addedAt: '3 сентября',
     priority: 1,
   },
+  {
+    id: 4,
+    title: 'Срочно отправить рабочий отчет',
+    isDone: false,
+    addedAt: '4 сентября',
+    priority: 4,
+  },
+  {
+    id: 5,
+    title: 'Заплатить за коммунальные услуги',
+    isDone: false,
+    addedAt: '3 сентября',
+    priority: 3,
+  },
 ]
+
+const priorities = ['#fff', '#ffd7b5', '#ffb38a', '#ff9248', '#ff6700']
 
 export const App = () => {
   return (
@@ -32,7 +48,7 @@ export const App = () => {
         {tasks.map((task) => (
           <li
             key={task.id}
-            style={{ backgroundColor: task.priority >= 2 ? 'orange' : 'transparent' }}
+            style={{ backgroundColor: priorities[task.priority] }}
           >
             <div>
               <b>Заголовок: </b>
