@@ -30,7 +30,7 @@ export const App = () => {
           <li key={task.id}>
             <div>
               <b>Заголовок: </b>
-              <span>{task.title}</span>
+              <span style={{ textDecoration: `${task.isDone ? 'line-through' : 'none'}` }}>{task.title}</span>
             </div>
             <div>
               <b>Статус: </b>
