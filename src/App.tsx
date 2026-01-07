@@ -21,6 +21,8 @@ export const App = () => {
   }, [])
 
   useEffect(() => {
+    if (!boardId || !selectedTaskId) return
+
     fetch(`https://trelly.it-incubator.app/api/1.0/boards/${boardId}/tasks/${selectedTaskId}`, {
       headers: {
         'api-key': API_KEY,
