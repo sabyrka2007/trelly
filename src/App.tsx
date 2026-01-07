@@ -51,6 +51,8 @@ export const App = () => {
 
       {tasks.length === 0 && <p>Задачи отсутствуют</p>}
 
+      <button onClick={() => setSelectedTaskId(null)}>Сбросить выделение</button>
+
       <ul>
         {tasks.map((task) => (
           <li
