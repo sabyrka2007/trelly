@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const tasks = [
   {
     id: 1,
@@ -39,17 +41,25 @@ const tasks = [
 const priorities = ['#fff', '#ffd7b5', '#ffb38a', '#ff9248', '#ff6700']
 
 export const App = () => {
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null)
+
   return (
     <>
       <h1>Список дел</h1>
+
       {tasks === null && <p>Загрузка...</p>}
+
       {tasks.length === 0 && <p>Задачи отсутствуют</p>}
+
       <ul>
         {tasks.map((task) => (
           <li
             key={task.id}
-            style={{ backgroundColor: priorities[task.priority] }}
-            onClick={() => alert(task.id)}
+            style={{
+              backgroundColor: priorities[task.priority],
+              border: `1px solid ${task.id === selectedTaskId ? 'blue' : 'black'}`,
+            }}
+            onClick={() => setSelectedTaskId(task.id)}
           >
             <div>
               <b>Заголовок: </b>
