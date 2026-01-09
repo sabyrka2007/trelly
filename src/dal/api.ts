@@ -1,5 +1,5 @@
-import { API_KEY } from '../env'
-import type { GlobalTaskListItemJsonApiData } from '../types'
+import { API_KEY } from './env'
+import type { GlobalTaskListItemJsonApiData } from './types'
 
 const BASE_URL = 'https://trelly.it-incubator.app/api/1.0'
 

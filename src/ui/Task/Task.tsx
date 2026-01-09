@@ -1,4 +1,4 @@
-import type { GlobalTaskListItemJsonApiData } from '../../types'
+import type { GlobalTaskListItemJsonApiData } from '../../dal/types'
 import styles from './Task.module.scss'
 
 interface Props {

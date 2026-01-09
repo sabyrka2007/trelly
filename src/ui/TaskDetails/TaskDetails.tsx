@@ -1,4 +1,4 @@
-import type { TaskDetailsData } from '../../types'
+import type { TaskDetailsData } from '../../dal/types'
 import styles from './TaskDetails.module.scss'
 
 interface Props {

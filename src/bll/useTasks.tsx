@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { GlobalTaskListItemJsonApiData, TaskDetailsData } from '../types'
+import type { GlobalTaskListItemJsonApiData, TaskDetailsData } from '../dal/types'
 import { getTaskDetails, getTracks } from '../dal/api'
 
 export const useTasks = () => {
