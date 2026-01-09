@@ -1,7 +1,5 @@
+import styles from './PageTitle.module.scss'
+
 export const PageTitle = () => {
-  return (
-    <div>
-      PageTitle
-    </div>
-  )
+  return <h1 className={styles.title}>Список дел</h1>
 }
