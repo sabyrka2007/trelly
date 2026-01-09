@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { type GlobalTaskListItemJsonApiData, type TaskDetailsData } from './types'
+import { getTaskDetails, getTracks } from './dal/api'
 
 export const App = () => {
-  const API_KEY = import.meta.env.VITE_API_KEY
-
   const [tasks, setTasks] = useState<GlobalTaskListItemJsonApiData[] | null>(null)
   const [selectedTask, setSelectedTask] = useState<TaskDetailsData | null>(null)
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
@@ -12,23 +11,13 @@ export const App = () => {
   const priorities = ['#fff', '#ffd7b5', '#ffb38a', '#ff9248', '#ff6700']
 
   useEffect(() => {
-    fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
-      headers: {
-        'api-key': API_KEY,
-      },
-    }).then(res => res.json())
-      .then(json => setTasks(json.data))
+    getTracks().then(json => setTasks(json.data))
   }, [])
 
   useEffect(() => {
     if (!boardId || !selectedTaskId) return
 
-    fetch(`https://trelly.it-incubator.app/api/1.0/boards/${boardId}/tasks/${selectedTaskId}`, {
-      headers: {
-        'api-key': API_KEY,
-      },
-    }).then(res => res.json())
-      .then(json => setSelectedTask(json.data))
+    getTaskDetails(boardId, selectedTaskId).then(json => setSelectedTask(json.data))
   }, [boardId, selectedTaskId])
 
   return (
