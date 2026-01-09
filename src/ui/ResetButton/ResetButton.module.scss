@@ -1,24 +1,45 @@
 .button {
-  align-self: flex-start;
+  all: unset;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   padding: 8px 14px;
   border-radius: 8px;
-  border: 1px solid #ddd;
-  background: #fff;
 
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  color: #333;
+  color: #374151;
 
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
 
-  &:hover {
-    background: #f3f3f3;
-    border-color: #ccc;
-  }
-
-  &:active {
-    background: #eaeaea;
-  }
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.05s ease;
 }
+
+.button:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.button::before {
+  content: '↺';
+  margin-right: 6px;
+  font-size: 14px;
+}
+
