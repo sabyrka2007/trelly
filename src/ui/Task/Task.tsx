@@ -1,4 +1,5 @@
 import type { GlobalTaskListItemJsonApiData } from '../../types'
+import styles from './Task.module.scss'
 
 interface Props {
   task: GlobalTaskListItemJsonApiData
@@ -9,33 +10,32 @@ interface Props {
 }
 
 export const Task = ({ task, taskId, setTaskId, setBoardId, priorities }: Props) => {
+  const isActive = task.id === taskId
+  const isDone = task.attributes.status === 2
+
   return (
     <li
-      key={task.id}
-      style={{
-        backgroundColor: priorities[task.attributes.priority],
-        border: `1px solid ${task.id === taskId ? 'blue' : 'black'}`,
-      }}
+      className={`${styles.task} ${isActive ? styles.active : ''}`}
+      style={{ borderLeftColor: priorities[task.attributes.priority] }}
       onClick={() => {
         setTaskId(task.id)
         setBoardId(task.attributes.boardId)
       }}
     >
-      <div>
-        <b>Заголовок: </b>
-        <span style={{ textDecoration: task.attributes.status === 2 ? 'line-through' : 'none' }}>{task.attributes.title}</span>
-      </div>
-      <div>
-        <b>Статус: </b>
+      <div className={styles.header}>
+        <span className={`${styles.title} ${isDone ? styles.done : ''}`}>
+          {task.attributes.title}
+        </span>
+
         <input
           type="checkbox"
-          checked={task.attributes.status === 2}
+          checked={isDone}
           readOnly
         />
       </div>
-      <div>
-        <b>Дата создания задачи: </b>
-        <span>{new Date(task.attributes.addedAt).toLocaleDateString()}</span>
+
+      <div className={styles.meta}>
+        Created at: {new Date(task.attributes.addedAt).toLocaleDateString()}
       </div>
     </li>
   )

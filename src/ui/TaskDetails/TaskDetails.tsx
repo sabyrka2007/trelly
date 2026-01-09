@@ -1,4 +1,5 @@
 import type { TaskDetailsData } from '../../types'
+import styles from './TaskDetails.module.scss'
 
 interface Props {
   task: TaskDetailsData | null
@@ -7,25 +8,37 @@ interface Props {
 
 export const TaskDetails = ({ task, taskId }: Props) => {
   return (
-    <div>
-      <h2>Task details</h2>
+    <section className={styles.details}>
+      <h2 className={styles.title}>Task details</h2>
 
-      {taskId === null && <p>Task is not selected</p>}
+      {taskId === null && (
+        <p className={styles.state}>Task is not selected</p>
+      )}
 
-      {taskId !== null &&
-        (!task || task.id !== taskId) && (
-          <p>Loading...</p>
-        )}
+      {taskId !== null && (!task || task.id !== taskId) && (
+        <p className={styles.state}>Loading...</p>
+      )}
 
       {task &&
         taskId !== null &&
         task.id === taskId && (
-          <ul>
-            <li>title - {task.attributes.title}</li>
-            <li>boardTitle - {task.attributes.boardTitle}</li>
-            <li>description - {task.attributes.description || 'no description'}</li>
+          <ul className={styles.list}>
+            <li>
+              <span className={styles.label}>Title</span>
+              <span className={styles.value}>{task.attributes.title}</span>
+            </li>
+            <li>
+              <span className={styles.label}>Board</span>
+              <span className={styles.value}>{task.attributes.boardTitle}</span>
+            </li>
+            <li>
+              <span className={styles.label}>Description</span>
+              <span className={styles.value}>
+                {task.attributes.description || 'No description'}
+              </span>
+            </li>
           </ul>
         )}
-    </div>
+    </section>
   )
 }
