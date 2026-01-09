@@ -1,4 +1,4 @@
-name: MusicFun Deploy
+name: Trelly Deploy
 
 on:
   push:
